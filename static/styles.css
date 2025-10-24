@@ -1,0 +1,30 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 0; background: #0f1220; color: #f4f6fb; }
+.container { max-width: 720px; margin: 0 auto; padding: 16px; }
+h1 { text-align: center; margin: 16px 0 24px; }
+.slot { display: flex; justify-content: center; margin: 20px 0; }
+.controls { text-align: center; }
+button { background: #6c5ce7; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+button:disabled { background: #3f3f54; cursor: not-allowed; }
+.muted { color: #aab1c6; }
+.small { font-size: 12px; }
+.result { text-align: center; margin-top: 10px; min-height: 24px; font-weight: 600; }
+.reward { text-align: center; margin-top: 12px; }
+.reward .code { display: inline-flex; align-items: center; gap: 8px; background: #1d2138; padding: 8px 10px; border-radius: 6px; border: 1px solid #2b2f4a; }
+.hidden { display: none; }
+
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; }
+.modal.hidden { display: none; }
+.modal-content { background: #161a2f; width: min(90vw, 420px); padding: 16px; border-radius: 10px; border: 1px solid #2b2f4a; }
+.modal-content h3 { margin-top: 0; }
+.modal-content label { display: block; margin-top: 8px; font-size: 14px; }
+.modal-content input[type="text"], .modal-content input[type="email"] { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #2b2f4a; background: #0f1220; color: #f4f6fb; }
+.modal-content .actions { display: flex; gap: 8px; margin-top: 12px; }
+.error { color: #ff6b6b; margin-top: 8px; }
+
+/* Admin */
+#leadsTable { width: 100%; border-collapse: collapse; margin-top: 16px; }
+#leadsTable th, #leadsTable td { border: 1px solid #2b2f4a; padding: 8px; text-align: left; }
+#leadsTable th { background: #1d2138; }
+.admin-controls { display: flex; gap: 8px; align-items: center; }
+.admin-controls input { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #2b2f4a; background: #0f1220; color: #f4f6fb; }
