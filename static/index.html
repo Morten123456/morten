@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Slot Lead Funnel</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Mini Slot Lead Funnel</h1>
+
+    <div class="slot">
+      <canvas id="slotCanvas" width="320" height="200"></canvas>
+    </div>
+
+    <div class="controls">
+      <button id="spinBtn">Spin</button>
+      <div id="statusText"></div>
+      <div id="spinsLeft" class="muted"></div>
+    </div>
+
+    <div id="result" class="result"></div>
+
+    <div id="reward" class="reward hidden">
+      <div>Din præmiekode:</div>
+      <div class="code"><span id="rewardCode"></span> <button id="copyCodeBtn">Kopier</button></div>
+    </div>
+
+    <footer>
+      <p class="muted small">
+        Gratis spil for sjov. Ingen pengeindsats.
+        Ved indsendelse af e-mail accepterer du vores privatlivspolitik og kan altid afmelde dig.
+      </p>
+    </footer>
+  </div>
+
+  <div id="emailModal" class="modal hidden">
+    <div class="modal-content">
+      <h3 id="modalTitle">Fortsæt for at se din præmie</h3>
+      <p id="modalDesc" class="muted"></p>
+      <form id="emailForm">
+        <label>E-mail</label>
+        <input type="email" id="emailInput" required placeholder="din@email.dk" />
+        <label>Navn (valgfri)</label>
+        <input type="text" id="nameInput" placeholder="Dit navn" />
+        <label class="consent">
+          <input type="checkbox" id="consentInput" required /> Jeg giver samtykke til at modtage kommunikation.
+        </label>
+        <div class="actions">
+          <button type="submit">Send</button>
+          <button type="button" id="cancelModal">Annuller</button>
+        </div>
+        <div id="formError" class="error"></div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/static/slot.js"></script>
+</body>
+</html>

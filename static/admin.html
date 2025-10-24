@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Mini Slot Lead Funnel</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Admin</h1>
+    <div class="admin-controls">
+      <input id="adminToken" placeholder="ADMIN_TOKEN" />
+      <button id="loadLeads">Hent leads</button>
+      <button id="exportCsv">Eksporter CSV</button>
+      <span id="adminStatus" class="muted"></span>
+    </div>
+
+    <table id="leadsTable">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Navn</th>
+          <th>Consent</th>
+          <th>HubSpot ID</th>
+          <th>Oprettet</th>
+          <th>Sidst set</th>
+          <th>Spins</th>
+          <th>Wins</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    const statusEl = document.getElementById('adminStatus');
+    document.getElementById('loadLeads').addEventListener('click', async () => {
+      statusEl.textContent = 'Henter...';
+      const token = document.getElementById('adminToken').value.trim();
+      try {
+        const res = await fetch('/api/admin/leads', {
+          headers: { Authorization: 'Bearer ' + token },
+        });
+        if (!res.ok) {
+          const e = await res.json().catch(() => ({}));
+          throw new Error(e.error || 'Fejl ved hentning');
+        }
+        const data = await res.json();
+        const tbody = document.querySelector('#leadsTable tbody');
+        tbody.innerHTML = '';
+        for (const row of data.leads || []) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${row.email || ''}</td>
+            <td>${row.name || ''}</td>
+            <td>${row.consent ? 'Ja' : 'Nej'}</td>
+            <td>${row.hubspot_contact_id || ''}</td>
+            <td>${row.created_at || ''}</td>
+            <td>${row.last_seen_at || ''}</td>
+            <td>${row.spins_count || 0}</td>
+            <td>${row.wins_count || 0}</td>
+          `;
+          tbody.appendChild(tr);
+        }
+        statusEl.textContent = `Fandt ${data.leads?.length || 0} leads`;
+      } catch (err) {
+        statusEl.textContent = err.message;
+      }
+    });
+
+    document.getElementById('exportCsv').addEventListener('click', async () => {
+      const token = document.getElementById('adminToken').value.trim();
+      const res = await fetch('/api/admin/export.csv', {
+        headers: { Authorization: 'Bearer ' + token },
+      });
+      if (!res.ok) {
+        const e = await res.json().catch(() => ({}));
+        alert(e.error || 'Fejl ved eksport');
+        return;
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'export.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
