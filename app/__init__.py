@@ -52,4 +52,16 @@ def create_app() -> Flask:
     def index():
         return send_from_directory(app.static_folder, "index.html")
 
+    # Serve the game app at /game
+    @app.get("/game")
+    def game():
+        game_dist = os.path.join(os.getcwd(), "game-app", "dist")
+        return send_from_directory(game_dist, "index.html")
+
+    # Serve game assets
+    @app.get("/game/<path:path>")
+    def game_assets(path):
+        game_dist = os.path.join(os.getcwd(), "game-app", "dist")
+        return send_from_directory(game_dist, path)
+
     return app
