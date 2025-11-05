@@ -119,11 +119,8 @@ function App() {
     if (currentQuestionIndex < DAILY_QUESTIONS.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // Markér at brugeren har spillet i dag
+      // Opdater streak før vi sætter dagens dato
       const todayDate = getTodayDateString();
-      localStorage.setItem('lastPlayedDate', todayDate);
-      
-      // Opdater streak
       const lastPlayedDate = localStorage.getItem('lastPlayedDate');
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
@@ -135,6 +132,9 @@ function App() {
       }
       setStreak(newStreak);
       localStorage.setItem('streak', newStreak.toString());
+      
+      // Markér at brugeren har spillet i dag (efter streak-tjek)
+      localStorage.setItem('lastPlayedDate', todayDate);
       
       setCurrentScreen('result');
     }

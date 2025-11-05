@@ -3,15 +3,17 @@ import { useState } from 'react';
 function QuestionScreen({ question, questionNumber, totalQuestions, onSubmit, previousAnswer }) {
   const [guess, setGuess] = useState('');
   const [showFeedback, setShowFeedback] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
     if (!guess || isNaN(guess) || Number(guess) <= 0) {
-      alert('Indtast venligst et gyldigt tal');
+      setError('Indtast venligst et gyldigt tal');
       return;
     }
 
+    setError('');
     setShowFeedback(true);
     
     // Vent lidt før vi går videre til næste spørgsmål
@@ -80,15 +82,25 @@ function QuestionScreen({ question, questionNumber, totalQuestions, onSubmit, pr
                     id="guess"
                     type="number"
                     value={guess}
-                    onChange={(e) => setGuess(e.target.value)}
+                    onChange={(e) => {
+                      setGuess(e.target.value);
+                      setError('');
+                    }}
                     placeholder="Indtast beløb"
-                    className="w-full px-4 py-4 text-2xl font-semibold text-center border-2 border-gray-300 rounded-xl focus:border-primary focus:outline-none"
+                    className={`w-full px-4 py-4 text-2xl font-semibold text-center border-2 rounded-xl focus:outline-none ${
+                      error ? 'border-red-500' : 'border-gray-300 focus:border-primary'
+                    }`}
                     autoFocus
                   />
                   <span className="absolute right-4 top-1/2 -translate-y-1/2 text-2xl text-gray-400">
                     kr
                   </span>
                 </div>
+                {error && (
+                  <p className="mt-2 text-sm text-red-600">
+                    {error}
+                  </p>
+                )}
               </div>
 
               <button

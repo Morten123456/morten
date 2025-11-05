@@ -201,7 +201,7 @@ function LeadForm({ totalScore, onBack }) {
       {/* Privacy note */}
       <div className="text-center text-xs text-gray-500 px-4">
         <p>
-          Vi respekterer din privatlivs og bruger kun din e-mail til at sende dig resultater og spare-tips. 
+          Vi respekterer dit privatliv og bruger kun din e-mail til at sende dig resultater og spare-tips. 
           Ingen spam. Du kan afmelde dig når som helst.
         </p>
       </div>
