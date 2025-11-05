@@ -12,7 +12,8 @@ def create_app() -> Flask:
     app = Flask(__name__, static_folder=os.path.join(os.getcwd(), "static"), static_url_path="/static")
 
     # Configuration
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:////workspace/app.db")
+    db_path = os.path.join(os.getcwd(), "app.db")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", f"sqlite:///{db_path}")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["APP_ENV"] = os.environ.get("APP_ENV", "dev")
     app.config["DAILY_SPIN_LIMIT"] = int(os.environ.get("DAILY_SPIN_LIMIT", "3"))
